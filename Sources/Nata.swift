@@ -55,3 +55,9 @@ func empty<Memory>(p: UnsafeMutablePointer<Memory>) -> Bool {
     return !exist(p)
 }
 
+extension String {
+    
+    static func fromCString(cstr: UnsafePointer<xmlChar>) -> String? {
+        return self.fromCString(UnsafePointer<CChar>(cstr))
+    }
+}

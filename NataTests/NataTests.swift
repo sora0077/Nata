@@ -36,14 +36,15 @@ class NataTests: XCTestCase {
     }
     
     func testRootElement() {
-        XCTAssertNotNil(document.rootElement)
+        XCTAssertEqual(document.rootElement?.tag, "feed", "root element should be feed")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testTitle() {
+        
+        let titleElement = document.rootElement?.firstChild(tag: "title")
+        
+        XCTAssertNotNil(titleElement, "title element should not be nil")
+        XCTAssertEqual(titleElement?.tag, "title", "tag should be `title`")
+        XCTAssertEqual(titleElement?.stringValue, "Example Feed", "title string value should be 'Example Feed'")
     }
-    
 }

@@ -11,25 +11,23 @@ import Clibxml2
 
 public class XMLDocument {
     
-    public var version: String {
-        if empty(_version) && exist(_xmlDocument.memory.version) {
-            _version = String.fromCString(UnsafePointer<CChar>(_xmlDocument.memory.version))
+    public lazy var version: String = lazy {
+        if exist(self._xmlDocument.memory.version) {
+            return String.fromCString(self._xmlDocument.memory.version)!
         }
-        return _version
+        fatalError()
     }
-    private var _version: String!
     
-    public var stringEncoding: NSStringEncoding {
-        if empty(_stringEncoding) && exist(_xmlDocument.memory.encoding) {
-            let encodingName = String.fromCString(UnsafePointer<CChar>(_xmlDocument.memory.encoding))
+    public lazy var stringEncoding: NSStringEncoding = lazy {
+        if exist(self._xmlDocument.memory.encoding) {
+            let encodingName = String.fromCString(self._xmlDocument.memory.encoding)
             let encoding = CFStringConvertIANACharSetNameToEncoding(encodingName)
             if encoding != kCFStringEncodingInvalidId {
-                _stringEncoding = CFStringConvertEncodingToNSStringEncoding(encoding)
+                return CFStringConvertEncodingToNSStringEncoding(encoding)
             }
         }
-        return _stringEncoding
+        return 0
     }
-    private var _stringEncoding: NSStringEncoding = 0
     
 //    public private(set) var numberFormatter: NSNumberFormatter
 //    
@@ -43,7 +41,7 @@ public class XMLDocument {
     
     public convenience init(data: NSData) throws {
         let document = xmlReadMemory(UnsafePointer(data.bytes), Int32(data.length), "", nil, Int32(XML_PARSE_NOWARNING.rawValue | XML_PARSE_NOERROR.rawValue | XML_PARSE_RECOVER.rawValue))
-        if document == nil {
+        if empty(document) {
             try ErrorFromXMLErrorPtr(xmlGetLastError())
         }
         self.init(document: document)
@@ -52,7 +50,6 @@ public class XMLDocument {
     private let _xmlDocument: xmlDocPtr
     private init(document: xmlDocPtr) {
         _xmlDocument = document
-//        print(_xmlDocument.memory.name)
         if exist(_xmlDocument) {
             rootElement = element(node: xmlDocGetRootElement(_xmlDocument))
         }
