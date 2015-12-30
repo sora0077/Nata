@@ -38,12 +38,12 @@ class NataTests: XCTestCase {
     }
     
     func testRootElement() {
-        XCTAssertEqual(document.rootElement?.tag, "feed", "root element should be feed")
+        XCTAssertEqual(document.rootElement.tag, "feed", "root element should be feed")
     }
     
     func testTitle() {
         
-        let titleElement = document.rootElement?.firstChild(tag: "title")
+        let titleElement = document.rootElement.firstChild(tag: "title")
         
         XCTAssertNotNil(titleElement, "title element should not be nil")
         XCTAssertEqual(titleElement?.tag, "title", "tag should be `title`")
@@ -52,7 +52,7 @@ class NataTests: XCTestCase {
     
     func testXPathTitle() {
         
-        let titleElement = document.rootElement?.firstChild(XPath: "/atom:feed/atom:title")
+        let titleElement = document.rootElement.firstChild(XPath: "/atom:feed/atom:title")
         
         XCTAssertNotNil(titleElement, "title element should not be nil")
         XCTAssertEqual(titleElement?.tag, "title", "tag should be `title`")
@@ -61,17 +61,17 @@ class NataTests: XCTestCase {
     
     func testLinks() {
         
-        let linkElements = document.rootElement?.children(tag: "link")
+        let linkElements = document.rootElement.children(tag: "link")
         
-        XCTAssertEqual(linkElements?.count, 2, "should have 2 link elements")
-        XCTAssertEqual(linkElements?[0].stringValue, "", "stringValue should be nil")
-        XCTAssertNotNil(linkElements?[0]["href"], "href should not be nil")
-        XCTAssertNotEqual(linkElements?[0]["href"], linkElements?[1]["href"], "href values should not be equal")
+        XCTAssertEqual(linkElements.count, 2, "should have 2 link elements")
+        XCTAssertEqual(linkElements[0].stringValue, "", "stringValue should be nil")
+        XCTAssertNotNil(linkElements[0]["href"], "href should not be nil")
+        XCTAssertNotEqual(linkElements[0]["href"], linkElements[1]["href"], "href values should not be equal")
     }
     
     func testUpdated() {
         
-        let updatedElement = document.rootElement?.firstChild(tag: "updated")
+        let updatedElement = document.rootElement.firstChild(tag: "updated")
         
         XCTAssertNotNil(updatedElement?.dateValue, "dateValue should not be nil")
         

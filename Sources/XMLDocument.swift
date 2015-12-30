@@ -39,7 +39,10 @@ public class XMLDocument {
         return formatter
     }
     
-    public private(set) var rootElement: XMLElement?
+    public var rootElement: XMLElement {
+        return _rootElement
+    }
+    private var _rootElement: XMLElement!
     
     
     private let _xmlDocument: xmlDocPtr
@@ -60,9 +63,7 @@ public class XMLDocument {
     
     private init(document: xmlDocPtr) {
         _xmlDocument = document
-        if exist(_xmlDocument) {
-            rootElement = element(node: xmlDocGetRootElement(_xmlDocument))
-        }
+        _rootElement = element(node: xmlDocGetRootElement(_xmlDocument))!
     }
     
     deinit {
