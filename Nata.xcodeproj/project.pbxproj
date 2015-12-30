@@ -15,6 +15,8 @@
 		D910F70A1C332D0A00FB885A /* NataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D910F7091C332D0A00FB885A /* NataTests.swift */; };
 		D910F70C1C332D0A00FB885A /* Nata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D910F6EF1C331A7A00FB885A /* Nata.framework */; };
 		D910F7151C33345B00FB885A /* atom.xml in Resources */ = {isa = PBXBuildFile; fileRef = D910F7141C33345B00FB885A /* atom.xml */; };
+		D9DADF3B1C33B9B200EE412F /* XPathEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */; };
+		D9DADF3D1C33BB7C00EE412F /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DADF3C1C33BB7C00EE412F /* Macros.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,8 @@
 		D910F7091C332D0A00FB885A /* NataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NataTests.swift; sourceTree = "<group>"; };
 		D910F70B1C332D0A00FB885A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D910F7141C33345B00FB885A /* atom.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atom.xml; sourceTree = "<group>"; };
+		D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathEnumerator.swift; sourceTree = "<group>"; };
+		D9DADF3C1C33BB7C00EE412F /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,8 @@
 				D910F6FC1C331E5500FB885A /* XMLDocument.swift */,
 				D910F6FD1C331E5500FB885A /* XMLElement.swift */,
 				D910F7011C332BA400FB885A /* Nata.swift */,
+				D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */,
+				D9DADF3C1C33BB7C00EE412F /* Macros.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -218,6 +224,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9DADF3D1C33BB7C00EE412F /* Macros.swift in Sources */,
+				D9DADF3B1C33B9B200EE412F /* XPathEnumerator.swift in Sources */,
 				D910F6FF1C331E5500FB885A /* XMLDocument.swift in Sources */,
 				D910F7021C332BA400FB885A /* Nata.swift in Sources */,
 				D910F7001C331E5500FB885A /* XMLElement.swift in Sources */,
@@ -423,6 +431,7 @@
 				D910F7111C332D0A00FB885A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

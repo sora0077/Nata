@@ -19,6 +19,8 @@ class NataTests: XCTestCase {
         let filePath = NSBundle(forClass: self.dynamicType).pathForResource("atom", ofType: "xml")
         document = try? XMLDocument(data: NSData(contentsOfFile: filePath!)!)
         
+        document.definePrefix("atom", forDefaultNamespace: "http://www.w3.org/2005/Atom")
+        
         XCTAssertNotNil(document, "")
     }
     
@@ -46,5 +48,24 @@ class NataTests: XCTestCase {
         XCTAssertNotNil(titleElement, "title element should not be nil")
         XCTAssertEqual(titleElement?.tag, "title", "tag should be `title`")
         XCTAssertEqual(titleElement?.stringValue, "Example Feed", "title string value should be 'Example Feed'")
+    }
+    
+    func testXPathTitle() {
+        
+        let titleElement = document.rootElement?.firstChild(XPath: "/atom:feed/atom:title")
+        
+        XCTAssertNotNil(titleElement, "title element should not be nil")
+        XCTAssertEqual(titleElement?.tag, "title", "tag should be `title`")
+        XCTAssertEqual(titleElement?.stringValue, "Example Feed", "title string value should be 'Example Feed'")
+    }
+    
+    func testLinks() {
+        
+        let linkElements = document.rootElement?.children(tag: "link")
+        
+        XCTAssertEqual(linkElements?.count, 2, "should have 2 link elements")
+        XCTAssertEqual(linkElements?[0].stringValue, "", "stringValue should be nil")
+        XCTAssertNotNil(linkElements?[0]["href"], "href should not be nil")
+        XCTAssertNotEqual(linkElements?[0]["href"], linkElements?[1]["href"], "href values should not be equal")
     }
 }

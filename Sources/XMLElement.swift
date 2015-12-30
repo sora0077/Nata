@@ -16,6 +16,7 @@ func lazy<T>(@noescape f: () -> T) -> T {
 public class XMLElement {
     
     public internal(set) weak var document: XMLDocument?
+    var xmlNode: xmlNodePtr = nil
     
     public lazy var tag: String? = lazy {
         if exist(self.xmlNode.memory.name) {
@@ -31,10 +32,11 @@ public class XMLElement {
         
         return val
     }
-    
-    var xmlNode: xmlNodePtr = nil
-    
-    public func firstChild(tag tag: String, inNamespace namespace: String? = nil) -> XMLElement? {
+}
+
+public extension XMLElement {
+
+    func firstChild(tag tag: String, inNamespace namespace: String? = nil) -> XMLElement? {
         guard let indexes = indexesOfChildrenPassingTest({ node, stop in
             stop = XMLNodeMatchesTagInNamespace(node, tag: tag, ns: namespace)
             return stop
@@ -47,6 +49,75 @@ public class XMLElement {
         }
         return children[0]
     }
+    
+    func children(tag tag: String, inNamespace namespace: String? = nil) -> [XMLElement] {
+        guard let indexes = indexesOfChildrenPassingTest({ node, stop in
+            XMLNodeMatchesTagInNamespace(node, tag: tag, ns: namespace)
+        }) else {
+            return []
+        }
+        let children = childrenAtIndexes(indexes)
+        if empty(children.count) {
+            return []
+        }
+        return children
+    }
+    
+}
+
+public extension XMLElement {
+    
+    func firstChild(XPath path: String) -> XMLElement? {
+        
+        for element in XPath(path) {
+            return element
+        }
+        return nil
+    }
+    
+    func XPath(path: String) -> AnySequence<XMLElement> {
+        
+        return AnySequence { _ -> AnyGenerator<XMLElement> in
+            let xmlPath = self.xmlXPathObjectPtrWithXPath(path)
+            let enumerator: XPathEnumerator?
+            if let document = self.document where exist(xmlPath) {
+                enumerator =  document.enumeratorWithXPathObject(xmlPath)
+            } else {
+                enumerator = nil
+            }
+            return anyGenerator { _ -> XMLElement? in
+                if let enumerator = enumerator {
+                    return enumerator.nextObject() as? XMLElement
+                } else {
+                    return nil
+                }
+            }
+        }
+        
+    }
+}
+
+public extension XMLElement {
+    
+    func valueForAttribute(attribute: String) -> String? {
+        let xmlValue = xmlGetProp(xmlNode, xmlChar.fromString(attribute))
+        if exist(xmlValue) {
+            let value = String.fromCString(xmlValue)
+            xmlFree(xmlValue)
+            return value
+        }
+        return nil
+    }
+}
+
+public extension XMLElement {
+    
+    subscript (key: String) -> String? {
+        return valueForAttribute(key)
+    }
+}
+
+private extension XMLElement {
     
     func childrenAtIndexes(indexes: NSIndexSet) -> [XMLElement] {
         
@@ -90,7 +161,45 @@ public class XMLElement {
     }
 }
 
-func XMLNodeMatchesTagInNamespace(node: xmlNodePtr, tag: String?, ns: String?) -> Bool {
+private extension XMLElement {
+    
+    func xmlXPathObjectPtrWithXPath(path: String) -> xmlXPathObjectPtr {
+        let context = xmlXPathNewContext(xmlNode.memory.doc)
+        if exist(context) {
+            context.memory.node = xmlNode
+            
+            // Due to a bug in libxml2, namespaces may not appear in `xmlNode->ns`.
+            // As a workaround, `xmlNode->nsDef` is recursed to explicitly register namespaces.
+            var node = xmlNode
+            while exist(node) && exist(node.memory.parent) {
+                var ns = node.memory.nsDef
+                while exist(ns) {
+                    var prefix = ns.memory.prefix
+                    if empty(prefix) && document?.defaultNamespaces.count > 0 {
+                        if let href = String.fromCString(ns.memory.href) {
+                            if let defaultPrefix = document?.defaultNamespaces[href] {
+                                prefix = xmlChar.fromString(defaultPrefix)
+                            }
+                        }
+                    }
+                    if exist(prefix) {
+                        xmlXPathRegisterNs(context, prefix, ns.memory.href)
+                    }
+                    ns = ns.memory.next
+                }
+                node = node.memory.parent
+            }
+            
+            let xmlXPath = xmlXPathEvalExpression(xmlChar.fromString(path), context)
+            xmlXPathFreeContext(context)
+            
+            return xmlXPath
+        }
+        return nil
+    }
+}
+
+private func XMLNodeMatchesTagInNamespace(node: xmlNodePtr, tag: String?, ns: String?) -> Bool {
     
     let matchingTag: Bool
     if let tag = tag {

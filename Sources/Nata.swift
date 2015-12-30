@@ -61,3 +61,11 @@ extension String {
         return self.fromCString(UnsafePointer<CChar>(cstr))
     }
 }
+
+extension xmlChar {
+    
+    static func fromString(str: String) -> UnsafePointer<xmlChar> {
+        guard let str = str.cStringUsingEncoding(NSUTF8StringEncoding) else { return nil }
+        return UnsafePointer(str)
+    }
+}

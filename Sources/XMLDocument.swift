@@ -29,11 +29,16 @@ public class XMLDocument {
         return 0
     }
     
+    
 //    public private(set) var numberFormatter: NSNumberFormatter
 //    
 //    public private(set) var dateFormatter: NSDateFormatter
     
     public private(set) var rootElement: XMLElement?
+    
+    
+    private let _xmlDocument: xmlDocPtr
+    private(set) var defaultNamespaces: [String: String] = [:]
     
     public convenience init(string: String, encoding: NSStringEncoding = NSUTF8StringEncoding) throws {
         try self.init(data: string.dataUsingEncoding(encoding) ?? NSData())
@@ -47,7 +52,7 @@ public class XMLDocument {
         self.init(document: document)
     }
     
-    private let _xmlDocument: xmlDocPtr
+    
     private init(document: xmlDocPtr) {
         _xmlDocument = document
         if exist(_xmlDocument) {
@@ -60,6 +65,17 @@ public class XMLDocument {
     }
     
     
+}
+
+public extension XMLDocument {
+    
+    func definePrefix(prefix: String, forDefaultNamespace ns: String) {
+        defaultNamespaces[ns] = prefix
+    }
+}
+
+extension XMLDocument {
+    
     func element(node node: xmlNodePtr) -> XMLElement? {
         if empty(node) {
             return nil
@@ -71,4 +87,13 @@ public class XMLDocument {
         
         return element
     }
+    
+    func enumeratorWithXPathObject(XPath: xmlXPathObjectPtr) -> XPathEnumerator? {
+        if empty(XPath) || xmlXPathNodeSetIsEmpty(XPath.memory.nodesetval) {
+            return nil
+        }
+        return XPathEnumerator(XPath: XPath, document: self)
+    }
 }
+
+
