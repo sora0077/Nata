@@ -18,19 +18,23 @@ public class XMLElement {
     public internal(set) weak var document: XMLDocument?
     var xmlNode: xmlNodePtr = nil
     
-    public lazy var tag: String? = lazy {
+    public private(set) lazy var tag: String? = lazy {
         if exist(self.xmlNode.memory.name) {
             return String.fromCString(self.xmlNode.memory.name)
         }
         return nil
     }
     
-    public lazy var stringValue: String = lazy {
+    public private(set) lazy var stringValue: String = lazy {
         let key = xmlNodeGetContent(self.xmlNode)
         let val = exist(key) ? String.fromCString(key) ?? "" : ""
         xmlFree(key)
         
         return val
+    }
+    
+    public private(set) lazy var dateValue: NSDate? = lazy {
+        return self.document?.dateFormatter.dateFromString(self.stringValue)
     }
 }
 

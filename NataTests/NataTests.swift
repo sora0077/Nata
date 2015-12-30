@@ -68,4 +68,22 @@ class NataTests: XCTestCase {
         XCTAssertNotNil(linkElements?[0]["href"], "href should not be nil")
         XCTAssertNotEqual(linkElements?[0]["href"], linkElements?[1]["href"], "href values should not be equal")
     }
+    
+    func testUpdated() {
+        
+        let updatedElement = document.rootElement?.firstChild(tag: "updated")
+        
+        XCTAssertNotNil(updatedElement?.dateValue, "dateValue should not be nil")
+        
+        let dateComponents = NSDateComponents()
+        dateComponents.timeZone = NSTimeZone(abbreviation: "UTC")
+        dateComponents.year = 2003
+        dateComponents.month = 12
+        dateComponents.day = 13
+        dateComponents.hour = 18
+        dateComponents.minute = 30
+        dateComponents.second = 2
+        
+        XCTAssertEqual(updatedElement?.dateValue, NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)?.dateFromComponents(dateComponents), "dateValue should be equal to December 13, 2003 6:30:02 PM")
+    }
 }

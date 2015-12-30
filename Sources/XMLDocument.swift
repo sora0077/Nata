@@ -31,8 +31,13 @@ public class XMLDocument {
     
     
 //    public private(set) var numberFormatter: NSNumberFormatter
-//    
-//    public private(set) var dateFormatter: NSDateFormatter
+    
+    public private(set) var dateFormatter: NSDateFormatter = lazy {
+        let formatter = NSDateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter
+    }
     
     public private(set) var rootElement: XMLElement?
     
