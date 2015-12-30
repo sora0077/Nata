@@ -166,6 +166,9 @@ private extension XMLElement {
     func xmlXPathObjectPtrWithXPath(path: String) -> xmlXPathObjectPtr {
         let context = xmlXPathNewContext(xmlNode.memory.doc)
         if exist(context) {
+            defer {
+                xmlXPathFreeContext(context)
+            }
             context.memory.node = xmlNode
             
             // Due to a bug in libxml2, namespaces may not appear in `xmlNode->ns`.
@@ -189,11 +192,7 @@ private extension XMLElement {
                 }
                 node = node.memory.parent
             }
-            
-            let xmlXPath = xmlXPathEvalExpression(xmlChar.fromString(path), context)
-            xmlXPathFreeContext(context)
-            
-            return xmlXPath
+            return xmlXPathEvalExpression(xmlChar.fromString(path), context)
         }
         return nil
     }
