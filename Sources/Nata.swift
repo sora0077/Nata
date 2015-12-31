@@ -62,4 +62,10 @@ extension String {
     static func fromCString(cstr: UnsafePointer<xmlChar>) -> String? {
         return self.fromCString(UnsafePointer<CChar>(cstr))
     }
+    
+    subscript (range: NSRange) -> String {
+        let start = startIndex.advancedBy(range.location)
+        let end = start.advancedBy(range.length)
+        return self[start..<end]
+    }
 }
