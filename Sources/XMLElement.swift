@@ -31,6 +31,18 @@ public class XMLElement {
         return nil
     }
     
+    public private(set) lazy var attributes: [String: String] = lazy {
+        var attributes: [String: String] = [:]
+        var attribute = self.xmlNode.memory.properties
+        while exist(attribute) {
+            if let key = String.fromCString(attribute.memory.name) {
+                attributes[key] = self.valueForAttribute(key)
+            }
+            attribute = attribute.memory.next
+        }
+        return attributes
+    }
+    
     public private(set) lazy var stringValue: String = lazy {
         let key = xmlNodeGetContent(self.xmlNode)
         let val = exist(key) ? String.fromCString(key) ?? "" : ""

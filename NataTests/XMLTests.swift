@@ -27,16 +27,25 @@ class XMLTests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testXMLVersion() {
+        XCTAssertEqual(document.version, "1.0", "XML version should be 1.0")
+    }
+    
+    func testXMLEncoding() {
+        XCTAssertEqual(document.stringEncoding, NSUTF8StringEncoding, "XML encoding should be UTF-8")
     }
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testRootElement() {
+        XCTAssertEqual(document.rootElement.tag, "spec", "root element should be spec")
+        XCTAssertEqual(document.rootElement.attributes["w3c-doctype"], "rec", "w3c-doctype should be rec")
+        XCTAssertEqual(document.rootElement.attributes["lang"], "en", "xml:lang should be en")
     }
-
+    
+    func testTitle() {
+        let titleElement = document.rootElement.firstChild(tag: "header")?.firstChild(tag: "title")
+        
+        XCTAssertNotNil(titleElement, "title element should not be nil")
+        XCTAssertEqual(titleElement?.tag, "title", "tag should be `title`")
+        XCTAssertEqual(titleElement?.stringValue, "Extensible Markup Language (XML)", "title string value should be `Extensible Markup Language (XML)`")
+    }
 }
