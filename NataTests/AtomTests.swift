@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Nata
+import Nata
 
 class AtomTests: XCTestCase {
     
@@ -21,7 +21,7 @@ class AtomTests: XCTestCase {
         
         document.definePrefix("atom", forDefaultNamespace: "http://www.w3.org/2005/Atom")
         
-        XCTAssertNotNil(document, "")
+        XCTAssertNotNil(document, "Document should not be nil")
     }
     
     override func tearDown() {

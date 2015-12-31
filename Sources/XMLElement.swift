@@ -16,7 +16,6 @@ func lazy<T>(@noescape f: () -> T) -> T {
 public class XMLElement {
     
     public internal(set) weak var document: XMLDocument?
-    var xmlNode: xmlNodePtr = nil
     
     public private(set) lazy var namespace: String? = lazy {
         if exist(self.xmlNode.memory.ns) && exist(self.xmlNode.memory.ns.memory.prefix) {
@@ -43,6 +42,8 @@ public class XMLElement {
     public private(set) lazy var dateValue: NSDate? = lazy {
         return self.document?.dateFormatter.dateFromString(self.stringValue)
     }
+    
+    var xmlNode: xmlNodePtr = nil
 }
 
 public extension XMLElement {

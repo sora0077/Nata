@@ -17,6 +17,8 @@
 		D910F7151C33345B00FB885A /* atom.xml in Resources */ = {isa = PBXBuildFile; fileRef = D910F7141C33345B00FB885A /* atom.xml */; };
 		D9DADF3B1C33B9B200EE412F /* XPathEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */; };
 		D9DADF3D1C33BB7C00EE412F /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DADF3C1C33BB7C00EE412F /* Macros.swift */; };
+		D9F8B8CC1C34E577002C12D9 /* ocf.xml in Resources */ = {isa = PBXBuildFile; fileRef = D9F8B8CB1C34E577002C12D9 /* ocf.xml */; };
+		D9F8B8CE1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F8B8CD1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,8 @@
 		D910F7141C33345B00FB885A /* atom.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atom.xml; sourceTree = "<group>"; };
 		D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathEnumerator.swift; sourceTree = "<group>"; };
 		D9DADF3C1C33BB7C00EE412F /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
+		D9F8B8CB1C34E577002C12D9 /* ocf.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ocf.xml; path = "../../../../Downloads/Ono-master/Tests/ocf.xml"; sourceTree = "<group>"; };
+		D9F8B8CD1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNamespaceXPathTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				D910F7091C332D0A00FB885A /* AtomTests.swift */,
+				D9F8B8CD1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift */,
 				D910F7141C33345B00FB885A /* atom.xml */,
+				D9F8B8CB1C34E577002C12D9 /* ocf.xml */,
 				D910F70B1C332D0A00FB885A /* Info.plist */,
 			);
 			path = NataTests;
@@ -213,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9F8B8CC1C34E577002C12D9 /* ocf.xml in Resources */,
 				D910F7151C33345B00FB885A /* atom.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9F8B8CE1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift in Sources */,
 				D910F70A1C332D0A00FB885A /* AtomTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
