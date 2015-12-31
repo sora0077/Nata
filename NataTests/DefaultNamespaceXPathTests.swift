@@ -40,4 +40,19 @@ class DefaultNamespaceXPathTests: XCTestCase {
         XCTAssertEqual(1, count, "Element should be found at XPath '\(XPath)'")
     }
 
+    func testRelativeXPathWithDefaultNamespace() {
+        
+        document.definePrefix("ocf", forDefaultNamespace: "urn:oasis:names:tc:opendocument:xmlns:container")
+        let absoluteXPath = "/ocf:container/ocf:rootfiles"
+        let relativeXPath = "./ocf:rootfile"
+        var count = 0
+        for absoluteElement in document.XPath(absoluteXPath) {
+            for relativeElement in absoluteElement.XPath(relativeXPath) {
+                XCTAssertEqual("rootfile", relativeElement.tag, "tag should be `rootfile`")
+                count += 1
+            }
+        }
+        
+        XCTAssertEqual(1, count, "Element should be found at XPath '\(relativeXPath)' relative to XPath '\(absoluteXPath)'")
+    }
 }
