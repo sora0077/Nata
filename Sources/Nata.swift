@@ -22,6 +22,7 @@ public enum NataError: ErrorType {
         if exist(error) {
             let message = String.fromCString(error.memory.message) ?? ""
             let code = error.memory.code
+            xmlResetError(error)
             return .LibXMLError(code: Int(code), message: message)
         }
         return defaults

@@ -123,6 +123,19 @@ public extension XMLElement {
         }
         
     }
+    
+    func functionResultByEvaluatingXPath(path: String) -> XPathFunctionResult? {
+        let xmlXPath = xmlXPathObjectPtrWithXPath(path)
+        if exist(xmlXPath) {
+            let result = XPathFunctionResult(XPath: xmlXPath)
+            return result
+        }
+        return nil
+    }
+}
+
+public extension XMLElement {
+    
 }
 
 public extension XMLElement {

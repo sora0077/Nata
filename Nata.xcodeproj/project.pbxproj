@@ -21,6 +21,8 @@
 		D9F8B8D01C34EB7C002C12D9 /* ocf.xml in Resources */ = {isa = PBXBuildFile; fileRef = D9F8B8CF1C34EB7C002C12D9 /* ocf.xml */; };
 		D9F8B8D21C34EBE5002C12D9 /* XMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F8B8D11C34EBE5002C12D9 /* XMLTests.swift */; };
 		D9F8B8D41C34EC2B002C12D9 /* xml.xml in Resources */ = {isa = PBXBuildFile; fileRef = D9F8B8D31C34EC2B002C12D9 /* xml.xml */; };
+		D9F8B8D61C351231002C12D9 /* XPathFunctionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F8B8D51C351231002C12D9 /* XPathFunctionResult.swift */; };
+		D9F8B8D81C3514AE002C12D9 /* XPathFunctionResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F8B8D71C3514AE002C12D9 /* XPathFunctionResultTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		D9F8B8CF1C34EB7C002C12D9 /* ocf.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ocf.xml; sourceTree = "<group>"; };
 		D9F8B8D11C34EBE5002C12D9 /* XMLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLTests.swift; sourceTree = "<group>"; };
 		D9F8B8D31C34EC2B002C12D9 /* xml.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml.xml; sourceTree = "<group>"; };
+		D9F8B8D51C351231002C12D9 /* XPathFunctionResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathFunctionResult.swift; sourceTree = "<group>"; };
+		D9F8B8D71C3514AE002C12D9 /* XPathFunctionResultTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathFunctionResultTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,9 +110,10 @@
 				D910F6FB1C331E5500FB885A /* Searching.swift */,
 				D910F6FC1C331E5500FB885A /* XMLDocument.swift */,
 				D910F6FD1C331E5500FB885A /* XMLElement.swift */,
-				D910F7011C332BA400FB885A /* Nata.swift */,
 				D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */,
+				D9F8B8D51C351231002C12D9 /* XPathFunctionResult.swift */,
 				D9DADF3C1C33BB7C00EE412F /* Macros.swift */,
+				D910F7011C332BA400FB885A /* Nata.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 				D910F7091C332D0A00FB885A /* AtomTests.swift */,
 				D9F8B8CD1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift */,
 				D9F8B8D11C34EBE5002C12D9 /* XMLTests.swift */,
+				D9F8B8D71C3514AE002C12D9 /* XPathFunctionResultTests.swift */,
 				D910F7141C33345B00FB885A /* atom.xml */,
 				D9F8B8CF1C34EB7C002C12D9 /* ocf.xml */,
 				D9F8B8D31C34EC2B002C12D9 /* xml.xml */,
@@ -244,6 +250,7 @@
 				D910F7021C332BA400FB885A /* Nata.swift in Sources */,
 				D910F7001C331E5500FB885A /* XMLElement.swift in Sources */,
 				D910F6FE1C331E5500FB885A /* Searching.swift in Sources */,
+				D9F8B8D61C351231002C12D9 /* XPathFunctionResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +260,7 @@
 			files = (
 				D9F8B8D21C34EBE5002C12D9 /* XMLTests.swift in Sources */,
 				D9F8B8CE1C34E592002C12D9 /* DefaultNamespaceXPathTests.swift in Sources */,
+				D9F8B8D81C3514AE002C12D9 /* XPathFunctionResultTests.swift in Sources */,
 				D910F70A1C332D0A00FB885A /* AtomTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
