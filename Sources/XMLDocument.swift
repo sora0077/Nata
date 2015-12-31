@@ -78,6 +78,10 @@ public extension XMLDocument {
     func definePrefix(prefix: String, forDefaultNamespace ns: String) {
         defaultNamespaces[ns] = prefix
     }
+    
+    func enumerateElements(XPath path: String, @noescape usingBlock block: (XMLElement, Int, inout Bool) -> Void) {
+        rootElement.enumerateElements(XPath: path, usingBlock: block)
+    }
 }
 
 extension XMLDocument {

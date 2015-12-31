@@ -91,4 +91,28 @@ class NataTests: XCTestCase {
         let entryElements = document.rootElement.children(tag: "entry")
         XCTAssertEqual(entryElements.count, 1, "should be 1 entry element")
     }
+    
+    func testNamespace() {
+        let entryElements = document.rootElement.children(tag: "entry")
+        XCTAssertEqual(entryElements.count, 1, "should be 1 entry element")
+        
+        let namespacedElements = entryElements[0].children(tag: "language", inNamespace: "dc")
+        XCTAssertEqual(namespacedElements.count, 1, "should be 1 entry element")
+        
+        let namespacedElement = namespacedElements[0]
+        XCTAssertEqual(namespacedElement.stringValue, "en-us", "the value should match")
+        XCTAssertNotNil(namespacedElement.namespace, "the namespace shouldn't be nil")
+        XCTAssertEqual(namespacedElement.namespace, "dc", "Namespaces should match")
+    }
+    
+    func testXPathWithNamespaces() {
+        
+        var count = 0
+        document.enumerateElements(XPath: "//dc:language") { element, idx, stop in
+            XCTAssertNotNil(element.namespace, "the namespace shouldn't be nil")
+            XCTAssertEqual(element.namespace, "dc", "Namespaces should match")
+            count = idx + 1
+        }
+        XCTAssertEqual(count, 1, "should be 1 entry element")
+    }
 }

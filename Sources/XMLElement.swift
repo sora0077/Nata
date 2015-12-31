@@ -18,6 +18,13 @@ public class XMLElement {
     public internal(set) weak var document: XMLDocument?
     var xmlNode: xmlNodePtr = nil
     
+    public private(set) lazy var namespace: String? = lazy {
+        if exist(self.xmlNode.memory.ns) && exist(self.xmlNode.memory.ns.memory.prefix) {
+            return String.fromCString(self.xmlNode.memory.ns.memory.prefix)
+        }
+        return nil
+    }
+    
     public private(set) lazy var tag: String? = lazy {
         if exist(self.xmlNode.memory.name) {
             return String.fromCString(self.xmlNode.memory.name)
@@ -111,6 +118,21 @@ public extension XMLElement {
             return value
         }
         return nil
+    }
+}
+
+public extension XMLElement {
+    
+    func enumerateElements(XPath path: String, @noescape usingBlock block: (XMLElement, Int, inout Bool) -> Void) {
+        var idx = 0
+        var stop = false
+        for element in XPath(path) {
+            block(element, idx, &stop)
+            idx += 1
+            if stop {
+                break
+            }
+        }
     }
 }
 
