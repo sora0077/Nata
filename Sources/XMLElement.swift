@@ -31,6 +31,10 @@ public class XMLElement {
         return nil
     }
     
+    public private(set) lazy var lineNumber: Int = lazy {
+        return xmlGetLineNo(self.xmlNode)
+    }
+    
     public private(set) lazy var attributes: [String: String] = lazy {
         var attributes: [String: String] = [:]
         var attribute = self.xmlNode.memory.properties

@@ -11,19 +11,20 @@ import Clibxml2
 
 private let ErrorDomain = "jp.nata.error"
 
-
-func ErrorFromXMLErrorPtr(errorPtr: xmlErrorPtr) throws {
-    if errorPtr != nil {
-        let message = String.fromCString(errorPtr.memory.message) ?? ""
-        let code = errorPtr.memory.code
+public enum NataError: ErrorType {
+    
+    case LibXMLError(code: Int, message: String)
+    case ParseError
+    
+    internal static func libxmlGetLastError(defaults: NataError = .ParseError) -> NataError {
         
-        let userInfo = [
-            NSLocalizedFailureReasonErrorKey: message
-        ]
-        let nsError = NSError(domain: ErrorDomain, code: Int(code), userInfo: userInfo)
-        xmlResetError(errorPtr)
-        
-        throw nsError
+        let error = xmlGetLastError()
+        if exist(error) {
+            let message = String.fromCString(error.memory.message) ?? ""
+            let code = error.memory.code
+            return .LibXMLError(code: Int(code), message: message)
+        }
+        return defaults
     }
 }
 

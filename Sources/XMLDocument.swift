@@ -52,10 +52,12 @@ public class XMLDocument {
         try self.init(data: string.dataUsingEncoding(encoding) ?? NSData())
     }
     
-    public convenience init(data: NSData) throws {
-        let document = xmlReadMemory(UnsafePointer(data.bytes), Int32(data.length), "", nil, Int32(XML_PARSE_NOWARNING.rawValue | XML_PARSE_NOERROR.rawValue | XML_PARSE_RECOVER.rawValue))
+    public convenience init(data: NSData?) throws {
+        let buffer = data.map { UnsafePointer<Int8>($0.bytes) } ?? nil
+        let size = Int32(data?.length ?? 0)
+        let document = xmlReadMemory(buffer, size, "", nil, Int32(XML_PARSE_NOWARNING.rawValue | XML_PARSE_NOERROR.rawValue | XML_PARSE_RECOVER.rawValue))
         if empty(document) {
-            try ErrorFromXMLErrorPtr(xmlGetLastError())
+            throw NataError.libxmlGetLastError()
         }
         self.init(document: document)
     }
