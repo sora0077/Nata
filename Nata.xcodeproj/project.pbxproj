@@ -12,7 +12,7 @@
 		D910F6FF1C331E5500FB885A /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = D910F6FC1C331E5500FB885A /* XMLDocument.swift */; };
 		D910F7001C331E5500FB885A /* XMLElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D910F6FD1C331E5500FB885A /* XMLElement.swift */; };
 		D910F7021C332BA400FB885A /* Nata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D910F7011C332BA400FB885A /* Nata.swift */; };
-		D910F70A1C332D0A00FB885A /* NataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D910F7091C332D0A00FB885A /* NataTests.swift */; };
+		D910F70A1C332D0A00FB885A /* AtomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D910F7091C332D0A00FB885A /* AtomTests.swift */; };
 		D910F70C1C332D0A00FB885A /* Nata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D910F6EF1C331A7A00FB885A /* Nata.framework */; };
 		D910F7151C33345B00FB885A /* atom.xml in Resources */ = {isa = PBXBuildFile; fileRef = D910F7141C33345B00FB885A /* atom.xml */; };
 		D9DADF3B1C33B9B200EE412F /* XPathEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */; };
@@ -38,7 +38,7 @@
 		D910F6FD1C331E5500FB885A /* XMLElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLElement.swift; sourceTree = "<group>"; };
 		D910F7011C332BA400FB885A /* Nata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nata.swift; sourceTree = "<group>"; };
 		D910F7071C332D0A00FB885A /* NataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D910F7091C332D0A00FB885A /* NataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NataTests.swift; sourceTree = "<group>"; };
+		D910F7091C332D0A00FB885A /* AtomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomTests.swift; sourceTree = "<group>"; };
 		D910F70B1C332D0A00FB885A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D910F7141C33345B00FB885A /* atom.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atom.xml; sourceTree = "<group>"; };
 		D9DADF3A1C33B9B200EE412F /* XPathEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathEnumerator.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 		D910F7081C332D0A00FB885A /* NataTests */ = {
 			isa = PBXGroup;
 			children = (
-				D910F7091C332D0A00FB885A /* NataTests.swift */,
+				D910F7091C332D0A00FB885A /* AtomTests.swift */,
 				D910F7141C33345B00FB885A /* atom.xml */,
 				D910F70B1C332D0A00FB885A /* Info.plist */,
 			);
@@ -237,7 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D910F70A1C332D0A00FB885A /* NataTests.swift in Sources */,
+				D910F70A1C332D0A00FB885A /* AtomTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

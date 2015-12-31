@@ -1,5 +1,5 @@
 //
-//  NataTests.swift
+//  AtomTests.swift
 //  NataTests
 //
 //  Created by 林達也 on 2015/12/30.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Nata
 
-class NataTests: XCTestCase {
+class AtomTests: XCTestCase {
     
     private var document: XMLDocument!
     
