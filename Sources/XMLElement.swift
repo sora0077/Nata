@@ -13,7 +13,7 @@ func lazy<T>(@noescape f: () -> T) -> T {
     return f()
 }
 
-public class XMLElement {
+public final class XMLElement {
     
     public internal(set) weak var document: XMLDocument?
     
@@ -45,6 +45,10 @@ public class XMLElement {
             attribute = attribute.memory.next
         }
         return attributes
+    }
+    
+    public var isBlank: Bool {
+        return stringValue.isEmpty
     }
     
     public private(set) lazy var stringValue: String = lazy {

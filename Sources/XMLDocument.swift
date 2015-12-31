@@ -85,6 +85,10 @@ public extension XMLDocument {
         rootElement.enumerateElements(XPath: path, usingBlock: block)
     }
     
+    func firstChild(XPath path: String) -> XMLElement? {
+        return rootElement.firstChild(XPath: path)
+    }
+    
     func XPath(path: String) -> AnySequence<XMLElement> {
         return rootElement.XPath(path)
     }
