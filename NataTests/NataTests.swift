@@ -86,4 +86,9 @@ class NataTests: XCTestCase {
         
         XCTAssertEqual(updatedElement?.dateValue, NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)?.dateFromComponents(dateComponents), "dateValue should be equal to December 13, 2003 6:30:02 PM")
     }
+    
+    func testEntries() {
+        let entryElements = document.rootElement.children(tag: "entry")
+        XCTAssertEqual(entryElements.count, 1, "should be 1 entry element")
+    }
 }
