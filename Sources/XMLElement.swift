@@ -104,7 +104,7 @@ public extension XMLElement {
 public extension XMLElement {
     
     func valueForAttribute(attribute: String) -> String? {
-        let xmlValue = xmlGetProp(xmlNode, xmlChar.fromString(attribute))
+        let xmlValue = xmlGetProp(xmlNode, attribute)
         if exist(xmlValue) {
             let value = String.fromCString(xmlValue)
             xmlFree(xmlValue)
@@ -181,22 +181,25 @@ private extension XMLElement {
             while exist(node) && exist(node.memory.parent) {
                 var ns = node.memory.nsDef
                 while exist(ns) {
-                    var prefix = ns.memory.prefix
-                    if empty(prefix) && document?.defaultNamespaces.count > 0 {
-                        if let href = String.fromCString(ns.memory.href) {
-                            if let defaultPrefix = document?.defaultNamespaces[href] {
-                                prefix = xmlChar.fromString(defaultPrefix)
+                    func nsprefix() -> String? {
+                        let prefix = ns.memory.prefix
+                        if empty(prefix) && document?.defaultNamespaces.count > 0 {
+                            if let href = String.fromCString(ns.memory.href) {
+                                if let defaultPrefix = document?.defaultNamespaces[href] {
+                                    return defaultPrefix
+                                }
                             }
                         }
+                        return String.fromCString(prefix)
                     }
-                    if exist(prefix) {
+                    if let prefix = nsprefix() {
                         xmlXPathRegisterNs(context, prefix, ns.memory.href)
                     }
                     ns = ns.memory.next
                 }
                 node = node.memory.parent
             }
-            return xmlXPathEvalExpression(xmlChar.fromString(path), context)
+            return xmlXPathEvalExpression(path, context)
         }
         return nil
     }
