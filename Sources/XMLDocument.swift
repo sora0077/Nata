@@ -59,10 +59,7 @@ public final class XMLDocument {
         if empty(document) {
             throw NataError.libxmlGetLastError()
         }
-        let error = xmlGetLastError()
-        if exist(error) {
-            xmlResetError(error)
-        }
+        xmlResetError(xmlGetLastError())
         self.init(document: document)
     }
     
@@ -91,10 +88,7 @@ public extension XMLDocument {
         if empty(document) {
             throw NataError.libxmlGetLastError()
         }
-        let error = xmlGetLastError()
-        if exist(error) {
-            xmlResetError(error)
-        }
+        xmlResetError(xmlGetLastError())
         return self.init(document: document)
     }
 }
@@ -115,6 +109,10 @@ public extension XMLDocument {
     
     func XPath(path: String) -> AnySequence<XMLElement> {
         return rootElement.XPath(path)
+    }
+    
+    func CSS(css: String) -> AnySequence<XMLElement> {
+        return rootElement.CSS(css)
     }
 }
 

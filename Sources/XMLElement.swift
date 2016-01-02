@@ -67,6 +67,10 @@ public final class XMLElement {
 }
 
 public extension XMLElement {
+    
+    var children: [XMLElement] {
+        return childrenAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(0, NSIntegerMax)))
+    }
 
     func firstChild(tag tag: String, inNamespace namespace: String? = nil) -> XMLElement? {
         guard let indexes = indexesOfChildrenPassingTest({ node, stop in
@@ -135,6 +139,11 @@ public extension XMLElement {
             return result
         }
         return nil
+    }
+    
+    
+    func CSS(css: String) -> AnySequence<XMLElement> {
+        return XPath(XPathFromCSS(css))
     }
 }
 
