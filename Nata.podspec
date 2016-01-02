@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Nata"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "A sensible way to deal with XML & HTML for iOS"
 
   s.homepage     = "https://github.com/sora0077/Nata"
