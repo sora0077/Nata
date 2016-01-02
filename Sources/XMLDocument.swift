@@ -59,6 +59,10 @@ public final class XMLDocument {
         if empty(document) {
             throw NataError.libxmlGetLastError()
         }
+        let error = xmlGetLastError()
+        if exist(error) {
+            xmlResetError(error)
+        }
         self.init(document: document)
     }
     
@@ -77,15 +81,19 @@ public final class XMLDocument {
 
 public extension XMLDocument {
     
-    static func HTMLDocument(string string: String) throws -> Self {
-        return try HTMLDocument(data: string.dataUsingEncoding(NSUTF8StringEncoding))
+    static func HTMLDocument(string string: String, encoding: NSStringEncoding = NSUTF8StringEncoding) throws -> Self {
+        return try HTMLDocument(data: string.dataUsingEncoding(encoding))
     }
     static func HTMLDocument(data data: NSData?) throws -> Self {
         let buffer = data.map { UnsafePointer<Int8>($0.bytes) } ?? nil
         let size = Int32(data?.length ?? 0)
-        let document = xmlReadMemory(buffer, size, "", nil, Int32(HTML_PARSE_NOWARNING.rawValue | HTML_PARSE_NOERROR.rawValue | HTML_PARSE_RECOVER.rawValue))
+        let document = htmlReadMemory(buffer, size, "", nil, Int32(HTML_PARSE_NOWARNING.rawValue | HTML_PARSE_NOERROR.rawValue | HTML_PARSE_RECOVER.rawValue))
         if empty(document) {
             throw NataError.libxmlGetLastError()
+        }
+        let error = xmlGetLastError()
+        if exist(error) {
+            xmlResetError(error)
         }
         return self.init(document: document)
     }

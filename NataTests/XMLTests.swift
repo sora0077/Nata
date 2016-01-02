@@ -76,7 +76,7 @@ class XMLTests: XCTestCase {
         } catch NataError.ParseError {
             
         } catch {
-            XCTFail("error should be NataError.ParseError")
+            XCTFail("error should be NataError.ParseError \(error)")
         }
     }
 }
