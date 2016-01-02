@@ -57,7 +57,6 @@ internal func XPathFromCSS(CSS: String) -> String {
                     do {
                         for result in CSSRegex.`class`.matchesInString(token, options: [], range: range) {
                             if result.numberOfRanges > 1 {
-                                print(token[result.rangeAtIndex(1)])
                                 XPathComponent += "\(symbol)[contains(concat(' ',normalize-space(@class),' '),' \(token[result.rangeAtIndex(1)]) ')]"
                             }
                         }
