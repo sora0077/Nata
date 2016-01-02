@@ -29,8 +29,11 @@ public final class XMLDocument {
         return 0
     }
     
-    
-//    public private(set) var numberFormatter: NSNumberFormatter
+    public private(set) var numberFormatter: NSNumberFormatter = lazy {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .DecimalStyle
+        return formatter
+    }
     
     public private(set) var dateFormatter: NSDateFormatter = lazy {
         let formatter = NSDateFormatter()
@@ -72,8 +75,12 @@ public final class XMLDocument {
     deinit {
         xmlFreeDoc(_xmlDocument)
     }
-    
-    
+}
+
+extension XMLDocument: Equatable {}
+
+public func ==(lhs: XMLDocument, rhs: XMLDocument) -> Bool {
+    return lhs._xmlDocument == rhs._xmlDocument
 }
 
 public extension XMLDocument {
@@ -123,9 +130,7 @@ extension XMLDocument {
             return nil
         }
         
-        let element = XMLElement()
-        element.xmlNode = node
-        element.document = self
+        let element = XMLElement(node: node, document: self)
         
         return element
     }

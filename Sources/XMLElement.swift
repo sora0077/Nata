@@ -15,29 +15,29 @@ func lazy<T>(@noescape f: () -> T) -> T {
 
 public final class XMLElement {
     
-    public internal(set) weak var document: XMLDocument?
+    public private(set) weak var document: XMLDocument?
     
     public private(set) lazy var namespace: String? = lazy {
-        if exist(self.xmlNode.memory.ns) && exist(self.xmlNode.memory.ns.memory.prefix) {
-            return String.fromCString(self.xmlNode.memory.ns.memory.prefix)
+        if exist(self._xmlNode.memory.ns) && exist(self._xmlNode.memory.ns.memory.prefix) {
+            return String.fromCString(self._xmlNode.memory.ns.memory.prefix)
         }
         return nil
     }
     
     public private(set) lazy var tag: String? = lazy {
-        if exist(self.xmlNode.memory.name) {
-            return String.fromCString(self.xmlNode.memory.name)
+        if exist(self._xmlNode.memory.name) {
+            return String.fromCString(self._xmlNode.memory.name)
         }
         return nil
     }
     
     public private(set) lazy var lineNumber: Int = lazy {
-        return xmlGetLineNo(self.xmlNode)
+        return xmlGetLineNo(self._xmlNode)
     }
     
     public private(set) lazy var attributes: [String: String] = lazy {
         var attributes: [String: String] = [:]
-        var attribute = self.xmlNode.memory.properties
+        var attribute = self._xmlNode.memory.properties
         while exist(attribute) {
             if let key = String.fromCString(attribute.memory.name) {
                 attributes[key] = self.valueForAttribute(key)
@@ -52,7 +52,7 @@ public final class XMLElement {
     }
     
     public private(set) lazy var stringValue: String = lazy {
-        let key = xmlNodeGetContent(self.xmlNode)
+        let key = xmlNodeGetContent(self._xmlNode)
         let val = exist(key) ? String.fromCString(key) ?? "" : ""
         xmlFree(key)
         
@@ -63,7 +63,30 @@ public final class XMLElement {
         return self.document?.dateFormatter.dateFromString(self.stringValue)
     }
     
-    var xmlNode: xmlNodePtr = nil
+    public private(set) lazy var numberValue: NSNumber? = lazy {
+        return self.document?.numberFormatter.numberFromString(self.stringValue)
+    }
+    
+    public private(set) lazy var previousSibling: XMLElement? = lazy {
+        return self.document?.element(node: self._xmlNode.memory.prev)
+    }
+    
+    public private(set) lazy var nextSibling: XMLElement? = lazy {
+        return self.document?.element(node: self._xmlNode.memory.next)
+    }
+    
+    private var _xmlNode: xmlNodePtr = nil
+    
+    init(node: xmlNodePtr, document: XMLDocument) {
+        _xmlNode = node
+        self.document = document
+    }
+}
+
+extension XMLElement: Equatable {}
+
+public func ==(lhs: XMLElement, rhs: XMLElement) -> Bool {
+    return lhs._xmlNode == rhs._xmlNode
 }
 
 public extension XMLElement {
@@ -154,7 +177,7 @@ public extension XMLElement {
 public extension XMLElement {
     
     func valueForAttribute(attribute: String) -> String? {
-        let xmlValue = xmlGetProp(xmlNode, attribute)
+        let xmlValue = xmlGetProp(_xmlNode, attribute)
         if exist(xmlValue) {
             let value = String.fromCString(xmlValue)
             xmlFree(xmlValue)
@@ -196,7 +219,7 @@ private extension XMLElement {
         
         var children: [XMLElement] = []
         
-        var cursor = xmlNode.memory.children
+        var cursor = _xmlNode.memory.children
         var idx: Int = 0
         while exist(cursor) {
             if indexes.contains(idx) && cursor.memory.type == XML_ELEMENT_NODE {
@@ -214,7 +237,7 @@ private extension XMLElement {
     func indexesOfChildrenPassingTest(test: (xmlNodePtr, inout Bool) -> Bool) -> NSIndexSet? {
         let mutableIndexSet = NSMutableIndexSet()
         
-        var cursor = xmlNode.memory.children
+        var cursor = _xmlNode.memory.children
         var idx: Int = 0
         var stop: Bool = false
         while exist(cursor) && !stop {
@@ -233,16 +256,16 @@ private extension XMLElement {
 private extension XMLElement {
     
     func xmlXPathObjectPtrWithXPath(path: String) -> xmlXPathObjectPtr {
-        let context = xmlXPathNewContext(xmlNode.memory.doc)
+        let context = xmlXPathNewContext(_xmlNode.memory.doc)
         if exist(context) {
             defer {
                 xmlXPathFreeContext(context)
             }
-            context.memory.node = xmlNode
+            context.memory.node = _xmlNode
             
-            // Due to a bug in libxml2, namespaces may not appear in `xmlNode->ns`.
-            // As a workaround, `xmlNode->nsDef` is recursed to explicitly register namespaces.
-            var node = xmlNode
+            // Due to a bug in libxml2, namespaces may not appear in `_xmlNode->ns`.
+            // As a workaround, `_xmlNode->nsDef` is recursed to explicitly register namespaces.
+            var node = _xmlNode
             while exist(node) && exist(node.memory.parent) {
                 var ns = node.memory.nsDef
                 while exist(ns) {
